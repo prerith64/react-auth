@@ -20,6 +20,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use((req, res, next) => {
+  req.setTimeout(15000); // Set timeout to 15 seconds
+  next();
+});
+
+
 app.get('/',(req,res)=>{
     res.send("hello")
 })
