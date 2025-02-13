@@ -19,8 +19,8 @@ export const logIn=async(req,res)=>{
     const {accessToken,refreshToken} = await generateTokens(user);
     res.cookie("refreshToken",refreshToken, {
       httpOnly: true,
-      secure: false, // Change to true in production (HTTPS)
-      sameSite: "Lax",
+      secure: true, // Change to true in production (HTTPS)
+      sameSite: "None",
     });
     
     res.json({accessToken})
@@ -48,8 +48,8 @@ export const getRefreshToken = async (req, res) => {
     // Set new refresh token in cookies
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
-      secure: false, // Change to true in production (HTTPS)
-      sameSite: "Lax",
+      secure: true, // Change to true in production (HTTPS)
+      sameSite: "None",
     });
     
     res.json({ accessToken });
