@@ -1,6 +1,7 @@
 import axios from "axios";
 import React,{ createContext, useContext, useState,useEffect, useCallback} from "react";
 
+
 const AuthContext= createContext();
 const API = axios.create({baseURL:"http://localhost:3000/user",withCredentials:true})
 
