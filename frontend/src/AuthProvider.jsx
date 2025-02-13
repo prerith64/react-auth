@@ -3,7 +3,7 @@ import React,{ createContext, useContext, useState,useEffect, useCallback} from 
 
 
 const AuthContext= createContext();
-const API = axios.create({baseURL:"http://localhost:3000/user",withCredentials:true})
+const API = axios.create({baseURL:"https://react-auth-beta-lovat.vercel.app/user",withCredentials:true})
 
 export const AuthProvider = ({children}) => {
  const [isAuthInitialized,setIsAuthInitialized]=useState(false);
