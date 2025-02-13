@@ -1,20 +1,17 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import mongodbConnect from "./db/mongodbConnect.js";
-import userRouter from "./Routes/userRoute.js";
+import express from "express"
+import dotenv from 'dotenv'
 
-dotenv.config();
+import cors from 'cors'
+import cookieParser from "cookie-parser"
+import mongodbConnect from "./db/mongodbConnect.js"
+import userRouter from "./Routes/userRoute.js"
 
-const app = express();
+const app = express()
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-// ✅ Proper CORS Setup
+dotenv.config()
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+app.use(cookieParser())
 app.use(cors({
   origin: "https://react-auth-4929.vercel.app",
   credentials: true,
@@ -22,18 +19,14 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// ✅ Basic Route
-app.get("/", (req, res) => res.send("Hello from server!"));
 
-// ✅ User Routes
-app.use("/user", userRouter);
+app.get('/',(req,res)=>{
+    res.send("hello")
+})
 
-// ✅ Connect to MongoDB BEFORE starting server
-mongodbConnect().then(() => {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-  });
-}).catch(err => {
-  console.error("🔥 MongoDB Connection Error:", err);
-});
+app.use('/user',userRouter);
+
+app.listen(process.env.PORT,()=>{
+    console.log('server is running');
+    mongodbConnect()
+}); 
