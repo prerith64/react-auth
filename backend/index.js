@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors({origin:`${process.env.FRONT_END_URI}`,credentials:true}))
 app.use(cookieParser())
-
+app.options("*", cors());
 
 app.get('/',(req,res)=>{
     res.send("hello")
