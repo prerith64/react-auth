@@ -50,10 +50,12 @@ const signup=async(formData)=>{
      console.log("signed up successfully");
 }
 
-useEffect(() => {
-    if (accessToken) {
-      fetchText();
-    }
+  useEffect(() => {
+    const initialFetch = async () => {
+          await fetchText()
+    };
+
+    initialFetch()
   }, [accessToken]);
 
 
@@ -63,7 +65,8 @@ useEffect(() => {
     
     try {
       const { data } = await API.post("/login", formData);
-      setAccessToken(data.accessToken);
+       await setAccessToken(data.accessToken);
+
       console.log("end ",accessToken);
       
       setTexts([]); // ✅ Clear old data immediately
@@ -73,15 +76,25 @@ useEffect(() => {
     }
   };
 
+
+
 const logout = async () => {
     try {
       await API.post("/logout");
     } catch (error) {
       console.error("❌ Logout Failed", error);
     }
-   await setAccessToken(null);
-   await setIsAuthInitialized(false)
+    setAccessToken(null);
+    setIsAuthInitialized(false)
   };
+
+  useEffect(() => {
+    if (accessToken === null) {
+      console.log("User has logged out, accessToken is null.");
+      // You can also redirect or clear other states here
+    }
+  }, [accessToken]);
+
 
 const fetchText= useCallback(async()=>{
 if(!accessToken) return;
@@ -96,6 +109,7 @@ try {
     
 }
 },[accessToken])
+
 
 const addText=async(text)=>{
    
@@ -122,7 +136,7 @@ const addText=async(text)=>{
 
 
   return (
-<AuthContext.Provider value={{isAuthInitialized,AuthInitialize , signup , login , logout,fetchText,addText,texts}} >
+<AuthContext.Provider value={{isAuthInitialized,AuthInitialize , signup , login , logout,fetchText,addText,texts,accessToken}} >
     {children}
 </AuthContext.Provider>
   )
