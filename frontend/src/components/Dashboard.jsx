@@ -5,20 +5,18 @@ import Navbar from "./Navbar";
 const Dashboard = () => {
   const [text, setText] = useState("");
   const { texts, fetchText, addText, AuthInitialize } = useAuth();
-  const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false); // Loading state for button
 
   // ✅ Fetch texts on component mount
   useEffect(() => {
     const initialize = async () => {
-      setLoading(true);
-      await AuthInitialize(); // Ensure authentication
-      await fetchText(); // Fetch texts from backend
-      setLoading(false);
+      await AuthInitialize();
     };
-
     initialize();
   }, []); // ✅ Empty dependency array -> Runs only on mount
+
+
+  
 
   const handleAddText = async () => {
     if (!text.trim()) return; // Prevent adding empty text
@@ -62,11 +60,9 @@ const Dashboard = () => {
           <hr />
 
           <ul className="flex flex-col gap-6">
-            {loading ? (
-              <h1>Loading...</h1>
-            ) : (
+            {
               texts.map((t, i) => <li className="input-handle" key={i}>{t}</li>)
-            )}
+            }
           </ul>
         </div>
       </div>
