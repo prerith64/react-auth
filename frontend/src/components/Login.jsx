@@ -6,16 +6,16 @@ const Login = () => {
   const { login } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false); // Track loading state
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
-
     try {
       await login(form);
-      navigate("/dashboard");
+      window.location.href='/dashboard'
+     
     } catch (error) {
       console.error("Login failed", error);
     } finally {
