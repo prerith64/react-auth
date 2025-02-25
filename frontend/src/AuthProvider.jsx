@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{ createContext, useContext, useState,useEffect, useCallback} from "react";
+import React,{ createContext, useContext, useState,useEffect, useCallback,useRef} from "react";
 
 
 const AuthContext= createContext();
@@ -12,19 +12,22 @@ export const AuthProvider = ({children}) => {
 
   
 
+ const accessTokenRef = useRef(accessToken);
 
- API.interceptors.request.use((req)=>{
-    if(accessToken) 
-    {
-        req.headers.Authorization =` Bearer ${accessToken}`;
-        console.log("the access token is :",req.headers.Authorization);
-        
-    }
-    else{
-        console.log("No Access Token");
-    }
-    return req
- })
+ useEffect(() => {
+     accessTokenRef.current = accessToken;
+ }, [accessToken]);
+ 
+
+ API.interceptors.request.use((req) => {
+  const token = accessTokenRef.current; // Always gets the latest token
+  if (token) {
+      req.headers.Authorization = `Bearer ${token}`;
+  } else {
+      console.log("No Access Token");
+  }
+  return req;
+});
 
 API.interceptors.response.use(
     (res)=>res,
