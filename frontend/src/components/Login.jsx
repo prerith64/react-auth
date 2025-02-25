@@ -14,7 +14,7 @@ const Login = () => {
     setLoading(true); // Start loading
     try {
       await login(form);
-      window.location.href='/dashboard'
+      navigate('/dashboard');
      
     } catch (error) {
       console.error("Login failed", error);
