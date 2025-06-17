@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities{
+    .input-handle{
+        @apply outline-none ring-1 ring-neutral-300 px-6 py-4;
+    }
+    .form-class{
+      @apply  flex flex-col  w-[500px] gap-8 p-6 justify-between shadow-lg bg-white text-xl ;
+    }
+    .btn-class{
+        @apply outline-none border-none px-6 bg-orange-400 py-4 text-white;
+    }
+}
