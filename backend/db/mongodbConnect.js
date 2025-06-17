@@ -6,10 +6,7 @@ const mongodbConnect = async () => {
   if (mongoose.connection.readyState >= 1) return; // ✅ Prevent multiple connections
 
   try {
-    await mongoose.connect(process.env.MONGODB, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB);
     console.log("✅ MongoDB Connected");
   } catch (err) {
     console.error("🔥 MongoDB Connection Error:", err.message);
